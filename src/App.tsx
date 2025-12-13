@@ -1,12 +1,21 @@
-import './App.css'
-import { InfiniteCanvas } from './features/canvas'
+import { Tldraw, Editor } from 'tldraw'
+import { exportToToon } from './toon/exporter'
+import 'tldraw/tldraw.css'
 
-function App() {
+export default function App() {
 
+  const handleMount = (editor: Editor) => {
+
+    editor.store.listen(()=> {
+      const toon = exportToToon(editor)
+
+      console.log("Toon export: ", toon)
+    })
+
+  }
   return (
-    <InfiniteCanvas/>
+    <div style={{ position: 'fixed', inset: 0 }}>
+      <Tldraw onMount={handleMount}/>
+    </div>
   )
 }
-
-export default App
-
